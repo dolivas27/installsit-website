@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Installs IT Inc. — Residential Technology, Done Properly.</title>
+<meta name="description" content="Installs IT Inc. builds, networks, and secures the technology in Metro Detroit homes. Smart home automation, custom AV, networking, security cameras, and IT services. Livonia, MI. Since 2010.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ==========================================
+     DESIGN TOKENS
+     ========================================== */
+  :root {
+    --bg: #08090b;
+    --bg-elevated: #0e1014;
+    --bg-card: #13161b;
+    --bg-card-hover: #181c22;
+    --border: #1d2129;
+    --border-strong: #2a2f38;
+    --text: #f5f7fa;
+    --text-dim: #8a94a3;
+    --text-faint: #4a5260;
+    --accent: #00d4ff;
+    --accent-dim: #00b8d4;
+    --accent-glow: rgba(0, 212, 255, 0.18);
+    --accent-glow-soft: rgba(0, 212, 255, 0.08);
+    --display: 'Space Grotesk', sans-serif;
+    --sans: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'Geist Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* ==========================================
+     REUSABLE — LOGO MARK SVG
+     ========================================== */
+  .mark-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .mark-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .mark-letters {
+    position: absolute;
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  /* ==========================================
+     NAV
+     ========================================== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8, 9, 11, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .nav-logo .mark-wrap {
+    width: 36px;
+    height: 36px;
+  }
+  .nav-logo .mark-letters {
+    font-size: 13px;
+  }
+  .nav-logo .wordmark {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--text); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .nav-phone {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+  }
+  .nav-phone:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    transition: all 0.2s ease;
+  }
+  .nav-cta:hover {
+    background: #fff;
+    box-shadow: 0 0 24px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+
+  .mobile-nav-toggle { display: none; }
+
+  /* ==========================================
+     SHARED LAYOUT
+     ========================================== */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 48px;
+  }
+  section { position: relative; }
+  .section-pad { padding: 120px 0; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+
+  /* ==========================================
+     HOME / HERO
+     ========================================== */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 0 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Hero grid backdrop */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+  }
+
+  /* Hero glow */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: -8%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 980px;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 7.5vw, 96px);
+    line-height: 0.98;
+    margin-bottom: 32px;
+  }
+  .hero h1 .accent-word {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .hero h1 .strike-word {
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 21px);
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.55;
+    margin-bottom: 48px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 16px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+  }
+  .btn-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 32px var(--accent-glow);
+    transform: translateY(-2px);
+  }
+  .btn-primary .arrow {
+    transition: transform 0.2s;
+  }
+  .btn-primary:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  .btn-secondary {
+    color: var(--text);
+    padding: 16px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid var(--border-strong);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Hero stats bar */
+  .hero-stats {
+    margin-top: 90px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-stat {
+    padding: 0 24px;
+    border-right: 1px solid var(--border);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat:first-child { padding-left: 0; }
+
+  .hero-stat .num {
+    font-family: var(--display);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .hero-stat .num .plus { color: var(--accent); }
+  .hero-stat .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ==========================================
+     METHODOLOGY (HOME — second section)
+     ========================================== */
+  .method-section {
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .method-header {
+    max-width: 880px;
+    margin-bottom: 80px;
+  }
+  .method-header h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    margin-bottom: 24px;
+  }
+  .method-header h2 em {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .method-header p {
+    color: var(--text-dim);
+    font-size: 18px;
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+  .method-item {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: background 0.2s;
+  }
+  .method-item:hover { background: var(--bg-card); }
+
+  .method-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 28px;
+  }
+  .method-item h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  .method-item p {
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  /* ==========================================
+     SERVICES (HOME teaser & full Services page)
+     ========================================== */
+  .services-header {
+    max-width: 880px;
+    margin-bottom: 64px;
+  }
+  .services-header h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    margin-bottom: 24px;
+  }
+  .services-header p {
+    color: var(--text-dim);
+    font-size: 18px;
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .service-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 40px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .service-card:hover::before { width: 100%; }
+
+  .service-icon {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    color: var(--accent);
+  }
+  .service-card h3 {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .service-card p {
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .service-card .service-tech {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .service-card .service-tech strong {
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  /* ==========================================
+     ABOUT
+     ========================================== */
+  .about-section {
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-left .eyebrow { margin-bottom: 24px; }
+  .about-left h2 {
+    font-size: clamp(36px, 4.5vw, 56px);
+    margin-bottom: 32px;
+    line-height: 1.05;
+  }
+  .about-left h2 em {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .about-right p {
+    color: var(--text-dim);
+    font-size: 17px;
+    line-height: 1.75;
+    margin-bottom: 22px;
+  }
+  .about-right p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .about-right p:last-child { margin-bottom: 0; }
+
+  /* About — extra stats / credibility */
+  .about-credibility {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .cred-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .cred-card .cred-num {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .cred-card .cred-num .accent { color: var(--accent); }
+  .cred-card .cred-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .cred-card .cred-desc {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  /* ==========================================
+     PORTFOLIO
+     ========================================== */
+  .portfolio-header {
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .portfolio-header h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    max-width: 600px;
+  }
+  .portfolio-header p {
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 380px;
+    line-height: 1.6;
+  }
+
+  .case-study {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  .case-top {
+    padding: 56px 48px 48px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .case-top h3 {
+    font-size: 36px;
+    margin-bottom: 18px;
+    line-height: 1.1;
+  }
+  .case-top p {
+    color: var(--text-dim);
+    font-size: 15.5px;
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .case-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .case-meta-item .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .case-meta-item .value {
+    color: var(--text);
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  .case-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .case-stat {
+    padding: 36px 32px;
+    border-right: 1px solid var(--border);
+  }
+  .case-stat:last-child { border-right: none; }
+  .case-stat .num {
+    font-family: var(--display);
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .case-stat .num .accent { color: var(--accent); }
+  .case-stat .label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .case-systems {
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-elevated);
+  }
+  .case-systems-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .case-systems-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .case-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 7px 14px;
+    border-radius: 100px;
+    font-size: 12.5px;
+    font-family: var(--mono);
+    letter-spacing: -0.005em;
+  }
+
+  /* ==========================================
+     CONTACT
+     ========================================== */
+  .contact-section {
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    padding: 120px 0 0;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+    padding-bottom: 120px;
+  }
+
+  .contact-left .eyebrow { margin-bottom: 24px; }
+  .contact-left h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    margin-bottom: 32px;
+  }
+  .contact-left h2 em {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .contact-left .sub {
+    color: var(--text-dim);
+    font-size: 16.5px;
+    line-height: 1.65;
+    margin-bottom: 48px;
+    max-width: 440px;
+  }
+
+  .contact-direct {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .contact-item .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .contact-item .value {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .contact-item a.value:hover { color: var(--accent); }
+
+  /* Form */
+  .contact-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .form-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow-soft);
+  }
+  .form-textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: var(--sans);
+  }
+  .form-submit {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-size: 14.5px;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 8px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .form-submit:hover {
+    background: #fff;
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+  .form-note {
+    color: var(--text-faint);
+    font-size: 12px;
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  /* ==========================================
+     FOOTER
+     ========================================== */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 60px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 48px;
+  }
+  .footer-brand .nav-logo { margin-bottom: 18px; cursor: default; }
+  .footer-brand p {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    line-height: 1.65;
+    max-width: 320px;
+  }
+  .footer-col h5 {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-col a {
+    color: var(--text);
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-bottom p {
+    color: var(--text-faint);
+    font-size: 12.5px;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+  }
+
+  /* ==========================================
+     RESPONSIVE
+     ========================================== */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .container { padding: 0 20px; }
+    .section-pad { padding: 80px 0; }
+
+    .nav-links { display: none; }
+    .nav-phone { display: none; }
+    .nav-right { gap: 12px; }
+
+    .hero { padding: 110px 0 60px; min-height: auto; }
+    .hero h1 { font-size: 44px; }
+    .hero-sub { font-size: 16px; }
+    .hero-ctas { gap: 12px; width: 100%; }
+    .btn-primary, .btn-secondary { padding: 14px 22px; font-size: 14px; }
+    .hero-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .hero-stat {
+      padding: 0;
+      border-right: none;
+    }
+
+    .method-grid { grid-template-columns: 1fr; }
+    .method-item { padding: 36px 28px; }
+
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { padding: 32px; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-credibility { grid-template-columns: 1fr; }
+
+    .case-top {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 36px 28px;
+    }
+    .case-top h3 { font-size: 26px; }
+    .case-stats { grid-template-columns: 1fr 1fr; }
+    .case-stat {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .case-stat:nth-child(2) { border-right: none; }
+    .case-stat:nth-child(3), .case-stat:nth-child(4) { border-bottom: none; }
+    .case-systems { padding: 28px; }
+
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; padding-bottom: 80px; }
+    .contact-form { padding: 28px; }
+    .form-row { grid-template-columns: 1fr; }
+
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+    }
+    .footer-brand { grid-column: span 2; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="mark-wrap">
+      <svg class="mark-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" stroke="#00d4ff" stroke-width="3"/>
+        <rect x="44" y="-2" width="12" height="10" fill="#08090b"/>
+        <line x1="44" y1="-2" x2="44" y2="8" stroke="#00d4ff" stroke-width="3"/>
+        <line x1="56" y1="-2" x2="56" y2="8" stroke="#00d4ff" stroke-width="3"/>
+        <rect x="44" y="92" width="12" height="10" fill="#08090b"/>
+        <line x1="44" y1="92" x2="44" y2="102" stroke="#00d4ff" stroke-width="3"/>
+        <line x1="56" y1="92" x2="56" y2="102" stroke="#00d4ff" stroke-width="3"/>
+      </svg>
+      <span class="mark-letters">IT</span>
+    </div>
+    <span class="wordmark">Installs IT</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <a href="tel:7345318841" class="nav-phone">734.531.8841</a>
+    <a href="#contact" class="nav-cta">Get a Quote</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="eyebrow">Livonia, MI · Since 2010</div>
+      <h1>
+        Residential technology,<br>
+        <span class="accent-word">done properly</span>.
+      </h1>
+      <p class="hero-sub">
+        Installs IT Inc. builds, networks, and secures the technology in Metro Detroit homes. Smart home automation, custom AV, networking, security, and IT services — installed once, documented thoroughly, and designed to outlast the warranty.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">
+          Get a Quote
+          <svg class="arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#services" class="btn-secondary">See what we do</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">15<span class="plus">+</span></div>
+          <div class="label">Years in business</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">Metro<br>Detroit</div>
+          <div class="label">Service area</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">Custom</div>
+          <div class="label">Every install</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">Documented</div>
+          <div class="label">Every system</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== METHODOLOGY ===== -->
+<section class="method-section section-pad">
+  <div class="container">
+    <div class="method-header">
+      <div class="eyebrow">How we work</div>
+      <h2>Three things we do on <em>every install</em>.</h2>
+      <p>The technology changes. The methodology doesn't. Whether it's a home theater, a security camera system, or a whole-home automation build, the same three principles apply.</p>
+    </div>
+
+    <div class="method-grid">
+      <div class="method-item">
+        <div class="method-num">01 / BUILT</div>
+        <h3>Properly, the first time.</h3>
+        <p>No shortcuts on the wiring. No band-aids on the configuration. The work gets done the way it should be done, with the right hardware for the job — not the cheapest hardware that will technically fit.</p>
+      </div>
+      <div class="method-item">
+        <div class="method-num">02 / NETWORKED</div>
+        <h3>On a foundation that holds.</h3>
+        <p>Every system needs a network underneath it. We design and install proper networking — managed switching, segmented VLANs, real WiFi coverage — so the technology you spent good money on actually works the way it was sold to you.</p>
+      </div>
+      <div class="method-item">
+        <div class="method-num">03 / SECURED</div>
+        <h3>And documented for the long run.</h3>
+        <p>Configurations get backed up. Credentials get stored properly. Network diagrams get drawn. When something needs to change two years from now, we don't start from scratch — and neither would the next person who touches it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section class="section-pad" id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="eyebrow">What we do</div>
+      <h2>Six things we install. One way we install them.</h2>
+      <p>Most of our customers need more than one of these. The advantage of working with us is that one team handles all of it — the home theater, the network it runs on, and the automation that ties it together.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M3 10l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V10z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9 21V12h6v9" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <h3>Smart Home Automation</h3>
+        <p>Whole-home automation built on real platforms, not vendor-locked apps. Lights, locks, climate, fans, scenes, and voice control — designed so it still works five years from now, after the company that made the app gets acquired.</p>
+        <div class="service-tech">
+          <strong>Includes:</strong> Home Assistant · Z-Wave · Zigbee · Matter · Smart locks · Smart lighting · Ceiling fans · Thermostats · Scene control · Voice integration
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="4" width="20" height="13" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Custom AV &amp; Home Theater</h3>
+        <p>From a properly mounted living room TV to a fully designed home theater. Surround sound, in-ceiling and in-wall speakers, projector systems, multi-room audio — wired and calibrated by someone who's been doing it since before the streaming era.</p>
+        <div class="service-tech">
+          <strong>Includes:</strong> TV mounting · Surround sound · In-ceiling speakers · Home theaters · Projection systems · Multi-room audio · AV racks · Universal remotes
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M3 12h18M12 3a13 13 0 010 18M12 3a13 13 0 000 18" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <h3>Networking &amp; Infrastructure</h3>
+        <p>The foundation everything else runs on. Properly designed home networks with managed switching, real WiFi coverage (not a single router shoved in a corner), VLAN segmentation for security, and remote access done the right way.</p>
+        <div class="service-tech">
+          <strong>Includes:</strong> Network design · Cat6 cabling · Managed switches · WiFi access points · VLAN segmentation · Firewalls · Remote access · Network documentation
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l9 4v6c0 4.5-3.5 7-9 8-5.5-1-9-3.5-9-8V7l9-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <h3>Security &amp; Cameras</h3>
+        <p>POE camera systems with local recording and proper notifications. Smart locks integrated with the rest of the home. Driveway alerts, package detection, and night vision that actually works. No monthly cloud fees required.</p>
+        <div class="service-tech">
+          <strong>Includes:</strong> POE cameras · Local NVR · Smart locks · Doorbells · Motion sensors · Driveway alerts · Mobile alerts · Night vision systems
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="4" width="18" height="13" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 20h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M9 9l2 3-2 3M13 15h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>IT Services</h3>
+        <p>Small business and residential IT — workstations, servers, backups, email, file sharing. Especially valuable for the small businesses we serve, where the same person who set up your network also handles the computers that run on it.</p>
+        <div class="service-tech">
+          <strong>Includes:</strong> Workstation setup · Server installs · Backup systems · Email · File sharing · Printer config · Remote support · Small business IT
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M14.7 6.3a4 4 0 00-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 005.4-5.4L15 12l-3-3 2.7-2.7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Computer Repair &amp; Support</h3>
+        <p>For our network and IT customers — when the desktop won't boot, the laptop is full of malware, or the office printer hasn't worked in three months. Available as a supporting service, not a walk-in shop.</p>
+        <div class="service-tech">
+          <strong>Includes:</strong> Diagnostics · OS issues · Hardware repair · Malware removal · Data recovery · Performance tuning · Printer troubleshooting
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about-section section-pad" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="eyebrow">About Installs IT</div>
+        <h2>Every install starts with a <em>network</em>.<br>Every network gets <em>documented</em>.<br>Every device gets a <em>backup plan</em>.</h2>
+      </div>
+      <div class="about-right">
+        <p>
+          Installs IT Inc. has been wiring Metro Detroit homes since 2010. For most of that time, that meant home theater, surround sound, TV installs, networks, and computer work — the residential technology that got installed before "smart home" meant anything serious.
+        </p>
+        <p>
+          The technology evolved. We evolved with it. <strong>Today, the work spans whole-home automation, prosumer networking, security camera systems, custom AV, and small-business IT — all under one roof, all installed to the same standard.</strong>
+        </p>
+        <p>
+          The advantage of fifteen years of low-voltage, network, and AV installation experience isn't a marketing line — it's why your TV mount is straight, your network actually reaches the back bedroom, and your automation still works after the power blinks. We've been doing this long enough to know what fails, why it fails, and how to install things so they don't.
+        </p>
+        <p>
+          <strong>One person owns every project from quote to install to support.</strong> No subcontractors. No bait-and-switch. The person who designs the system is the person who installs it, and the person you call when you have a question two years later.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-credibility">
+      <div class="cred-card">
+        <div class="cred-label">Established</div>
+        <div class="cred-num">20<span class="accent">10</span></div>
+        <div class="cred-desc">Family-operated out of Livonia, Michigan. Same phone number, same owner, same standard since day one.</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-label">Approach</div>
+        <div class="cred-num">One <span class="accent">team</span></div>
+        <div class="cred-desc">No subcontractors. The person who designs your system installs it and supports it. End to end.</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-label">Standard</div>
+        <div class="cred-num">Documented</div>
+        <div class="cred-desc">Every install is documented. Every config is backed up. So your system doesn't die when memory does.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PORTFOLIO ===== -->
+<section class="section-pad" id="portfolio">
+  <div class="container">
+    <div class="portfolio-header">
+      <div>
+        <div class="eyebrow">Recent work</div>
+        <h2>A whole-home build in <span style="color: var(--accent); font-style: italic; font-weight: 500;">Metro Detroit</span>.</h2>
+      </div>
+      <p>A current project demonstrating the full Installs IT methodology — automation, networking, security, and AV designed and installed as a single system.</p>
+    </div>
+
+    <div class="case-study">
+      <div class="case-top">
+        <div>
+          <h3>Custom whole-home automation, network &amp; security platform.</h3>
+          <p>
+            A multi-thousand-square-foot residence in Metro Detroit, designed as a single integrated system rather than a collection of standalone gadgets. The network was designed first — segmented VLANs for management, IoT, security, and guest traffic — then automation, lighting, locks, climate, and a POE camera system were layered on top.
+          </p>
+          <p>
+            Every device is documented. Every configuration is backed up offsite. The customer has a single mobile app to control the entire house and a single phone number to call if anything ever needs attention.
+          </p>
+        </div>
+        <div class="case-meta">
+          <div class="case-meta-item">
+            <div class="label">Location</div>
+            <div class="value">Metro Detroit, MI<br><span style="color: var(--text-dim); font-size: 13px;">(client name withheld)</span></div>
+          </div>
+          <div class="case-meta-item">
+            <div class="label">Scope</div>
+            <div class="value">Whole-home automation, networking, security, AV</div>
+          </div>
+          <div class="case-meta-item">
+            <div class="label">Status</div>
+            <div class="value" style="color: var(--accent);">● Ongoing build</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-stats">
+        <div class="case-stat">
+          <div class="num">4<span class="accent">+</span></div>
+          <div class="label">Network VLANs</div>
+        </div>
+        <div class="case-stat">
+          <div class="num">2<span class="accent">×</span></div>
+          <div class="label">Mesh protocols</div>
+        </div>
+        <div class="case-stat">
+          <div class="num">100<span class="accent">%</span></div>
+          <div class="label">Offsite backed up</div>
+        </div>
+        <div class="case-stat">
+          <div class="num">1</div>
+          <div class="label">App to control it all</div>
+        </div>
+      </div>
+
+      <div class="case-systems">
+        <div class="case-systems-label">Systems &amp; technology deployed</div>
+        <div class="case-systems-list">
+          <span class="case-tag">Home Assistant</span>
+          <span class="case-tag">Z-Wave</span>
+          <span class="case-tag">Zigbee</span>
+          <span class="case-tag">Matter</span>
+          <span class="case-tag">UniFi Network</span>
+          <span class="case-tag">pfSense Firewall</span>
+          <span class="case-tag">VLAN Segmentation</span>
+          <span class="case-tag">Smart Locks</span>
+          <span class="case-tag">Smart Lighting</span>
+          <span class="case-tag">Ceiling Fans</span>
+          <span class="case-tag">Ecobee Thermostats</span>
+          <span class="case-tag">POE Cameras</span>
+          <span class="case-tag">NVR / Frigate</span>
+          <span class="case-tag">Local Recording</span>
+          <span class="case-tag">Remote Access</span>
+          <span class="case-tag">Offsite Backups</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="eyebrow">Get in touch</div>
+        <h2>Tell us about the <em>project</em>.</h2>
+        <p class="sub">Whether it's a single TV install or a whole-home build, every project starts with a conversation. We'll get back to you within one business day.</p>
+
+        <div class="contact-direct">
+          <div class="contact-item">
+            <div class="label">Phone</div>
+            <a href="tel:7345318841" class="value">734.531.8841</a>
+          </div>
+          <div class="contact-item">
+            <div class="label">Based in</div>
+            <div class="value">Livonia, Michigan</div>
+          </div>
+          <div class="contact-item">
+            <div class="label">Service area</div>
+            <div class="value" style="font-size: 16px; font-family: var(--sans); font-weight: 400; color: var(--text-dim);">Contact us for current service area.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <!-- TODO: Replace action with your Formspree endpoint when ready -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="name">Your name</label>
+            <input class="form-input" type="text" id="name" name="name" placeholder="Jane Smith">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone</label>
+            <input class="form-input" type="tel" id="phone" name="phone" placeholder="734-555-0100">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="jane@example.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="project">Project type</label>
+          <select class="form-select" id="project" name="project">
+            <option>Smart home automation</option>
+            <option>Custom AV / home theater</option>
+            <option>Networking</option>
+            <option>Security cameras</option>
+            <option>IT services</option>
+            <option>Multiple / not sure yet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">Tell us about it</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="A few sentences about what you're looking to do, your timeline, and anything else we should know."></textarea>
+        </div>
+
+        <button type="button" class="form-submit" onclick="alert('Form preview only. Once deployed, this will send to your Formspree endpoint or email.');">
+          Send it over
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <p class="form-note">We respond within one business day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="mark-wrap" style="width: 36px; height: 36px;">
+            <svg class="mark-svg" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="46" stroke="#00d4ff" stroke-width="3"/>
+              <rect x="44" y="-2" width="12" height="10" fill="#08090b"/>
+              <line x1="44" y1="-2" x2="44" y2="8" stroke="#00d4ff" stroke-width="3"/>
+              <line x1="56" y1="-2" x2="56" y2="8" stroke="#00d4ff" stroke-width="3"/>
+              <rect x="44" y="92" width="12" height="10" fill="#08090b"/>
+              <line x1="44" y1="92" x2="44" y2="102" stroke="#00d4ff" stroke-width="3"/>
+              <line x1="56" y1="92" x2="56" y2="102" stroke="#00d4ff" stroke-width="3"/>
+            </svg>
+            <span class="mark-letters" style="font-size: 13px;">IT</span>
+          </div>
+          <span class="wordmark">Installs IT</span>
+        </div>
+        <p>Residential technology installation, properly engineered. Smart home, AV, networking, security, and IT services for Metro Detroit.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Smart Home</a></li>
+          <li><a href="#services">Custom AV</a></li>
+          <li><a href="#services">Networking</a></li>
+          <li><a href="#services">Security</a></li>
+          <li><a href="#services">IT Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Direct</h5>
+        <ul>
+          <li><a href="tel:7345318841">734.531.8841</a></li>
+          <li><a href="#contact">Get a quote</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Installs IT Inc. · Livonia, Michigan · All rights reserved.</p>
+      <p>Since 2010</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth-scroll-aware nav state
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
